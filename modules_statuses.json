@@ -1,0 +1,13 @@
+{
+    "Users": true,
+    "Roles": true,
+    "Settings": true,
+    "Logs": true,
+    "Trash": true,
+    "Skills": true,
+    "School": true,
+    "Filters": true,
+    "Plants": true,
+    "Venders": true,
+    "Stock": true
+}
