@@ -50,7 +50,7 @@ Filters
                 <label>Filter</label>
                 <select name="filter" id="" class="form-control select2">
                   @foreach($filters as $filter)
-                  <option value="{{$filter->name}}" @if($filter->name==$stock->filter) selected @endif>{{$filter->name}}</option>
+                  <option value="{{$filter->id}}" @if($filter->id==$stock->filter) selected @endif>{{$filter->name}}</option>
                   @endforeach
                 </select>
               </div>
@@ -76,21 +76,21 @@ Filters
                 <label>Select Vendor</label>
                 <select name="vender" id="" class="form-control select2">
                   @foreach($venders as $vender)
-                  <option value="{{$vender->name}}"@if($vender->name==$stock->vender) selected @endif>{{$vender->name}}</option>
+                  <option value="{{$vender->id}}"@if($vender->id==$stock->vender) selected @endif>{{$vender->name}}</option>
                   @endforeach
                 </select>
               </div>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
               <div class="form-group">
                 <label>Select School</label>
                 <select name="school" id="" class="form-control select2">
                   @foreach($schools as $school)
-                  <option value="{{$school->name}}"@if($school->name==$stock->school) selected @endif>{{$school->name}}</option>
+                  <option value="{{$school->id}}"@if($school->id==$stock->school) selected @endif>{{$school->name}}</option>
                   @endforeach
                 </select>
               </div>
-            </div>
+            </div> -->
           </div>
           
           <div class="card-footer text-end">

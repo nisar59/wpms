@@ -9,7 +9,7 @@ class Stock extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','costodian_number','relation','filter','no_of_filter','received_date','vender','school'];
+    protected $fillable = ['name','costodian_number','relation','filter','no_of_filter','received_date','vender','school_id'];
    	protected $table='stocks';
     
     protected static function newFactory()

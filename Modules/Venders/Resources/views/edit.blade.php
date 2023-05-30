@@ -48,7 +48,13 @@ Vendor Management
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Province</label>
-                <input type="text" class="form-control" name="province" value="{{$venders->province}}" placeholder="Enter Province">
+                <!-- <input type="text" class="form-control" name="province" value="{{$venders->province}}" placeholder="Enter Province"> -->
+                  <select name="province" id="province" class="form-control">
+                  <option value="">Select a Province</option>
+                  @foreach(json_decode(ProvincesDistricts()) as $key=> $province)
+                    <option value="{{$key}}" data-districts="{{json_encode($province)}}" @if($key== $venders->province) selected @endif>{{$key}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
           </div>
@@ -56,7 +62,10 @@ Vendor Management
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">District</label>
-                <input type="text" class="form-control" name="district" value="{{$venders->district}}" placeholder="Enter District">
+                <!-- <input type="text" class="form-control" name="district" value="{{$venders->district}}" placeholder="Enter District"> -->
+                <select name="district" id="district" class="form-control">
+                  <option value="">Select a District</option>
+                </select>
               </div>
             </div>
             <div class="col-md-6">
@@ -82,4 +91,31 @@ Vendor Management
     </div>
   </div>
 </form>
+@endsection
+@section('js')
+<script>
+  $(document).ready(function() {
+    setTimeout(function () {
+      $('#province').trigger('change');
+    }, 100);
+    $(document).on('change','#province', function() {
+      var dis=$(this).find('option:selected').data('districts');
+
+      var dis_html='<option value="">Select District</option>';
+
+      $.each(dis, function(index, vlu) {
+        var sel="";
+        if("{{$venders->district}}"==vlu.Name){
+          sel="selected";
+        }
+       dis_html+='<option value="'+vlu.Name+'" '+sel+'>'+vlu.Name+'</option>';
+      })
+
+      $("#district").html(dis_html);
+    });
+
+
+    });
+
+</script>
 @endsection

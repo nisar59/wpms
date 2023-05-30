@@ -21,9 +21,9 @@ Stock Management
       <div class="card-header bg-white">
         <div class="row">
           <h4 class="col-md-6">Stock Management</h4>
-          <div class="col-md-6 text-end">
+          <!-- <div class="col-md-6 text-end">
             <a href="{{url('stock/create')}}" class="btn btn-success">+</a>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="card-body">
@@ -38,7 +38,7 @@ Stock Management
                 <th>No of Filters</th>
                 <th>Date of Stock Received</th>
                 <th>Vendor</th>
-                <th>school</th>
+                <th>School Name</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -68,7 +68,7 @@ Stock Management
                 {data: 'no_of_filter', name: 'no_of_filter',class:'text-center'},
                 {data: 'received_date', name: 'received_date',class:'text-center'},
                 {data: 'vender', name: 'vender',class:'text-center'},
-                {data: 'school', name: 'school',class:'text-center'},
+                {data: 'school_id', name: 'school_id',class:'text-center'},
                 {data: 'action', name: 'action', orderable: false, searchable: false ,class:'text-center'},
             ]
           });

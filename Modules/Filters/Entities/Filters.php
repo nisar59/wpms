@@ -10,7 +10,7 @@ class Filters extends Model
     use HasFactory;
 
     protected $fillable = ['name','filter_change_frequency'];
-    protected $table='filter';
+    protected $table='filters';
     
     protected static function newFactory()
     {

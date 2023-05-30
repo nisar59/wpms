@@ -15,7 +15,7 @@ Filters
     </div>
   </div>
 </div>
-<form action="{{url('stock/store')}}" method="post">
+<form action="{{url('school/stock_store')}}" method="post">
   @csrf
   <div class="row">
     <div class="col-12 col-md-12">
@@ -76,7 +76,7 @@ Filters
                 <label>Select Vendor</label>
                 <select name="vender" id="" class="form-control select2">
                   @foreach($venders as $vender)
-                  <option value="{{$vender->name}}">{{$vender->name}}</option>
+                  <option value="{{$vender->id}}">{{$vender->name}}</option>
                   @endforeach
                 </select>
               </div>
@@ -86,7 +86,7 @@ Filters
                 <label>Select School</label>
                 <select name="school" id="" class="form-control select2">
                   @foreach($schools as $school)
-                  <option value="{{$school->name}}">{{$school->name}}</option>
+                  <option value="{{$school->id}}">{{$school->name}}</option>
                   @endforeach
                 </select>
               </div>

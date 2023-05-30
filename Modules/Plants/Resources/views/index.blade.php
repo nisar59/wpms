@@ -56,7 +56,7 @@ Plant
               buttons:[],
               columns: [
                 {data: 'name', name: 'name',class:'text-center'},
-                {data: 'filter_change_frequency', name: 'filter_change_frequency',class:'text-center'},
+                {data: 'filters', name: 'filters',class:'text-center'},
                 {data: 'action', name: 'action', orderable: false, searchable: false ,class:'text-center'},
             ]
           });

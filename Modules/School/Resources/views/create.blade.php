@@ -34,7 +34,12 @@ School Management
            <div class="col-md-6">
               <div class="form-group">
                 <label>Province</label>
-                <input type="text"  name="province" class="form-control" placeholder="Enter Province">
+                <select name="province" id="province" class="form-control">
+                  <option value="">Select a Province</option>
+                  @foreach(json_decode(ProvincesDistricts()) as $key=> $province)
+                    <option value="{{$key}}" data-districts="{{json_encode($province)}}">{{$key}}</option>
+                  @endforeach
+                </select>
               </div>
             </div>
           </div>
@@ -42,7 +47,9 @@ School Management
             <div class="col-md-6">
               <div class="form-group">
                 <label>District</label>
-                <input type="text" class="form-control" name="district" placeholder="Enter District">
+              <select name="district" id="district" class="form-control">
+                  <option value="">Select a District</option>
+                </select>
               </div>
             </div>
            <div class="col-md-6">
@@ -124,3 +131,25 @@ School Management
   </div>
 </form>
 @endsection
+
+@section('js')
+<script>
+  $(document).ready(function() {
+    $(document).on('change','#province', function() {
+      var dis=$(this).find('option:selected').data('districts');
+
+      var dis_html='<option value="">Select District</option>';
+
+      $.each(dis, function(index, vlu) {
+       dis_html+='<option value="'+vlu.Name+'">'+vlu.Name+'</option>';
+      })
+
+      $("#district").html(dis_html);
+    });
+
+
+    });
+
+</script>
+@endsection
+

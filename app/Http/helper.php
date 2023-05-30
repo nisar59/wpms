@@ -3,13 +3,13 @@ use Modules\Settings\Entities\Settings;
 use App\Models\User;
 use Modules\Clients\Entities\Client;
 use Modules\Desks\Entities\Desk;
-use Modules\Regions\Entities\Regions;
-use Modules\Areas\Entities\Areas;
-use Modules\Branches\Entities\Branches;
-use Modules\Packages\Entities\Packages;
-use App\Models\ClientSubscriptions;
 use Modules\Logs\Entities\Logs;
+use Modules\Stock\Entities\Stock;
+use Modules\Venders\Entities\Venders;
+use Modules\Filters\Entities\Filters;
+use Modules\School\Entities\School;
 use Modules\Logs\Entities\SystemLogs;
+use Modules\Plants\Entities\Plants;
 use Illuminate\Support\Facades\Http;
 function AllPermissions()
 {
@@ -68,6 +68,38 @@ function User($id)
 	if($user!=null){
 		return $user->name;
 	}
+}
+
+function Venders($id)
+{
+    $vender=Venders::find($id);
+    if($vender!=null){
+        return $vender->name;
+    }
+}
+
+function Filter($id)
+{
+    $filter=Filters::find($id);
+    if($filter!=null){
+        return $filter->name;
+    }
+}
+
+function Plants($id)
+{
+    $plant=Plants::find($id);
+    if($plant!=null){
+        return $plant->name;
+    }
+}
+
+function School($id)
+{
+    $school=School::find($id);
+    if($school!=null){
+        return $school->name;
+    }
 }
 
 

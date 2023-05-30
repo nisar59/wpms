@@ -16,6 +16,33 @@ Vendor Management
   </div>
 </div>
 <div class="row">
+   <div class="col-12">
+    <div class="card card-primary" id="filters-container">
+      <div class="card-header bg-white" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <h4><i class="fas fa-filter"></i> Filters</h4>
+      </div>
+      <div class="card-body p-0">
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#filters-container">
+          <div class="p-3 accordion-body">
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <label for="">Name</label>
+                <input type="text" class="form-control filters" name="name" placeholder="Name">
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="">Province</label>
+                <input type="text" class="form-control filters" name="province" placeholder="Province">
+              </div>
+              <div class="col-md-4 form-group">
+                <label for="">Shop or Bunsiness Address</label>
+                <input type="tezt" class="form-control filters" name="busines_address" placeholder="Shop or Bunsiness Address">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="col-12">
     <div class="card card-primary">
       <div class="card-header bg-white">

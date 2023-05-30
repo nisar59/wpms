@@ -6,6 +6,11 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\School\Entities\School;
+use Modules\School\Entities\SchoolPlants;
+use Modules\Plants\Entities\Plants;
+use Modules\Filters\Entities\Filters;
+use Modules\Venders\Entities\Venders;
+use Modules\Stock\Entities\Stock;
 use Yajra\DataTables\Facades\DataTables;
 use Throwable;
 use DB;
@@ -37,6 +42,25 @@ class SchoolController extends Controller
         }
         return view('school::index');
     }
+
+    /**
+     * Show the form for creating a new resource.
+     * @return Renderable
+     */
+    public function stock()
+    {
+       
+        $filters=Filters::all();
+        $venders=Venders::all();
+        $schools=School::all();
+        return view('school::stock',compact('filters','venders','schools'));
+    }   
+
+        /**
+     * Show the form for creating a new resource.
+     * @return Renderable
+     */
+    
 
     /**
      * Show the form for creating a new resource.
@@ -92,7 +116,57 @@ class SchoolController extends Controller
     public function show($id)
     {
         $school=School::find($id);
-        return view('school::show',compact('school'));
+        $plants=Plants::all();
+        $sch_plnt=SchoolPlants::all();
+        return view('school::show',compact('school','plants','sch_plnt'));
+    }
+
+    /**
+     * Show the specified resource.
+     * @param int $id
+     * @return Renderable
+     */
+
+     public function schoolPlant(Request $req)
+    {
+        $req->validate([
+            'plant_id'=>'required',
+        ]);
+        DB::table('school_plants')->insert([
+            'plant_id' => $req->plant_id, 
+            'school_id' => $req->school_id,  
+        ]);
+
+        return response()->json(
+            [
+                'success' => true,
+                'message' => 'Data inserted successfully'
+            ]
+        );
+    }
+
+       /**
+     * Update status.
+     * @param int $id
+     * @return Renderable
+     */
+    public function status($id, $status)
+    {
+        DB::beginTransaction();
+        try{
+        $school=SchoolPlants::find($id);
+        $school->status=$status;
+        $school->save();
+        DB::commit();
+         return redirect('school/show/'.$school->school_id)->with('success','School Plant status successfully updated');
+         
+         } catch(Exception $e){
+            DB::rollback();
+            return redirect()->back()->with('error','Something went wrong with this error: '.$e->getMessage());
+         }catch(Throwable $e){
+            DB::rollback();
+            return redirect()->back()->with('error','Something went wrong with this error: '.$e->getMessage());
+         }
     }
 
     /**

@@ -15,7 +15,7 @@ Plant
     </div>
   </div>
 </div>
-<form action="{{url('filters/store')}}" method="post">
+<form action="{{url('plants/store')}}" method="post">
   @csrf
   <div class="row">
     <div class="col-12 col-md-12">
@@ -34,10 +34,9 @@ Plant
             <div class="col-md-6">
               <div class="form-group">
                 <label>Filters</label>
-                
-                <select name="" id="" class="select2 form-control" multiple data-live-search="true">
+                <select name="filters[]" class="select2 form-control" multiple >
                   @foreach($filters as $filter)
-                  <option value="">{{$filter->name}}</option>
+                  <option value="{{$filter->id}}">{{$filter->name}}</option>
                   @endforeach
                 </select>
               </div>

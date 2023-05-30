@@ -13,6 +13,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Throwable;
 use DB;
 use Auth;
+use Carbon\Carbon;
 class StockController extends Controller
 {
     /**
@@ -33,6 +34,18 @@ class StockController extends Controller
                $action.='<a class="btn btn-danger btn-sm m-1" href="'.url('stock/destroy/'.$row->id).'"><i class="fas fa-trash-alt"></i></a>';
            }
                return $action;
+           })
+           ->editColumn('received_date',function ($row){
+               return Carbon::parse($row->received_date)->format('d-m-Y');
+           })
+           ->editColumn('vender',function ($row){
+              return Venders($row->vender);
+           })
+           ->editColumn('filter',function ($row){
+              return Filter($row->filter);
+           })
+           ->editColumn('school_id',function ($row){
+              return School($row->school_id);
            })
            ->rawColumns(['action'])
            ->make(true);
@@ -70,7 +83,7 @@ class StockController extends Controller
          try{
             Stock::create($req->except('_token'));
             DB::commit();
-            return redirect('stock')->with('success','Stock Management sccessfully created');
+            return redirect('school')->with('success','Stock Management sccessfully created');
          }catch(Exception $ex){
             DB::rollback();
          return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
@@ -144,6 +157,18 @@ class StockController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try{
+        Stock::find($id)->delete();
+        DB::commit();
+         return redirect('stock')->with('success','Stock Managementuccessfully deleted');
+         
+         } catch(Exception $e){
+            DB::rollback();
+            return redirect()->back()->with('error','Something went wrong with this error: '.$e->getMessage());
+         }catch(Throwable $e){
+            DB::rollback();
+            return redirect()->back()->with('error','Something went wrong with this error: '.$e->getMessage());
+         }
     }
 }
