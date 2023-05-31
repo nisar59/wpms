@@ -204,25 +204,26 @@ School Management
   var school_id = $('#school_id').val();
   var url = "{{url('school/savedata')}}";
   $.ajax({
-  url: url,
-  method: 'POST',
-  data: {
-  plant_id: plant_id,
-  school_id: school_id
-  },
-  success: function(response) {
-  if (response.success) {
-  alert(response.message)
-  $('#exampleModal').modal('hide');
-  } else {
-  alert("Error")
-  }
-  },
-  error: function(error) {
-  console.log(error)
-  }
+    url: url,
+    method: 'POST',
+    data: {
+      plant_id: plant_id,
+      school_id: school_id
+    },
+    success: function(response) {
+      if (response.success) {
+        alert(response.message)
+        $('#exampleModal').modal('hide');
+        location.reload();
+      } else {
+        alert("Error")
+      }
+    },
+    error: function(error) {
+      console.log(error)
+    }
   });
-  });
+});
   $(document).ready(function() {
   var roles_table = $('#stock').DataTable({
   processing: true,
