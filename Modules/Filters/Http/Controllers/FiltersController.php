@@ -119,7 +119,6 @@ class FiltersController extends Controller
             DB::rollback();
         return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
 
-
         }
     }
 
