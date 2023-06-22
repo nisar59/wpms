@@ -31,7 +31,7 @@ School Management
           <table class="table table-sm table-hover table-bordered" id="school" style="width:100%;">
             <thead class="text-center bg-primary text-white">
               <tr>
-                <th>Name</th>
+                <th>School Name</th>
                 <th>Province</th>
                 <th>District</th>
                 <th>Address</th>

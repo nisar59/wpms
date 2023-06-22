@@ -15,7 +15,7 @@ School Management
     </div>
   </div>
 </div>
-<form action="{{url('school/update/'.$school->id)}}" method="post">
+<form action="{{url('school/update/'.$school->id)}}" method="post" enctype="multipart/form-data">
   @csrf
   <div class="row">
     <div class="col-12 col-md-12">
@@ -27,14 +27,13 @@ School Management
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" name="name" value="{{$school->name}}" placeholder="Enter Name">
+                <label>School Name</label>
+                <input type="text" class="form-control" name="name" value="{{$school->name}}" placeholder="Enter School Name">
               </div>
             </div>
            <div class="col-md-6">
               <div class="form-group">
                 <label>Province</label>
-                <!-- <input type="text"  name="province" class="form-control" value="{{$school->province}}" placeholder="Enter Province"> -->
                  <select name="province" id="province" class="form-control">
                   <option value="">Select a Province</option>
                   @foreach(json_decode(ProvincesDistricts()) as $key=> $province)
@@ -43,39 +42,38 @@ School Management
                 </select>
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label>District</label>
-               <!--  <input type="text" class="form-control" name="district" value="{{$school->district}}" placeholder="Enter District"> -->
                <select name="district" id="district" class="form-control">
                   <option value="">Select a District</option>
                 </select>
               </div>
             </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Tehsil</label>
+                <input type="text" class="form-control" name="tehsil" value="{{$school->tehsil}}" placeholder="Enter Tehsil">
+              </div>
+            </div>            
            <div class="col-md-6">
               <div class="form-group">
                 <label>Address</label>
                 <input type="text"  name="address"  class="form-control" value="{{$school->address}}" placeholder="Enter Address">
               </div>
             </div>
-          </div>
-           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Tehsil</label>
-                <input type="text" class="form-control" name="tehsil" value="{{$school->tehsil}}" placeholder="Enter Tehsil">
+                <label>GPS Coordinates</label>
+                <input type="text" class="form-control" name="gps_coordinate" value="{{$school->gps_coordinate}}" placeholder="Enter GPS Coordinates ">
               </div>
-            </div>
+            </div>            
            <div class="col-md-6">
               <div class="form-group">
                 <label>EMIS Code</label>
                 <input type="text"  name="emis_code"  class="form-control" value="{{$school->emis_code}}" placeholder="Enter EMIS Code">
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label>Name of Focal Person</label>
@@ -85,29 +83,37 @@ School Management
            <div class="col-md-6">
               <div class="form-group">
                 <label>Contact of Focal Person</label>
-                <input type="number"  name="contact_of_focal_person" value="{{$school->contact_of_focal_person}}" class="form-control" placeholder="Enter Contact of Focal Person Code">
+                <input type="number"  name="contact_of_focal_person" value="{{$school->contact_of_focal_person}}" class="form-control" placeholder="Enter Contact of Focal Person">
               </div>
             </div>
-          </div>
-          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>GPS Coordinates</label>
-                <input type="text" class="form-control" name="gps_coordinate" value="{{$school->gps_coordinate}}" placeholder="Enter GPS Coordinates ">
+                <label>Relation of Focal Person</label>
+              <select name="relation_of_focal_person" id="relation_of_focal_person" class="form-control">
+                  <option value="">Select a Relation</option>
+                    @foreach(FocalPersonRelation() as $fprkey=> $fpr)
+                      <option value="{{$fprkey}}" {{$fprkey==$school->relation_of_focal_person ? 'selected' : ''}}>{{$fpr}}</option>
+                    @endforeach
+                </select>
               </div>
-            </div>
+            </div> 
            <div class="col-md-6">
               <div class="form-group">
                 <label>School Gender</label>
                 <select name="school_gender" class="form-control" >
-                  <option value="Boys">Boys</option>
-                  <option value="Girls">Girls</option>
-                  <option value="Co-Education">Co-Education</option>
+                  <option value="">Select Gender</option>
+                  @foreach(SchoolGender() as $sgkey=>$sg)
+                    <option value="{{$sgkey}}" {{$sgkey==$school->school_gender ? 'selected' : ''}}>{{$sg}}</option>
+                  @endforeach
                 </select>
               </div>
             </div>
-          </div>
-            <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>No of Students</label>
+                <input type="number" class="form-control" value="{{$school->no_of_students}}" name="no_of_students" placeholder="Enter No of Students">
+              </div>
+            </div>            
             <div class="col-md-6">
               <div class="form-group">
                 <label>No of Male Teachers</label>
@@ -120,10 +126,14 @@ School Management
                 <input type="number"  name="no_of_female_teachers" value="{{$school->no_of_female_teachers}}" class="form-control" placeholder="Enter No of Female Teachers">
               </div>
             </div>
+           <div class="col-md-6">
+              <div class="form-group">
+                <label>School Picture</label>
+                <input type="file"  name="image"  class="form-control">
+                <a href="{{url('img/school/'.$school->image)}}" target="blank">{{$school->image}}</a>
+              </div>
+            </div>             
           </div>
-          
-          
-          
         </div>
         <div class="card-footer text-end">
           <button class="btn btn-primary mr-1" type="submit">Submit</button>

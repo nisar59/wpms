@@ -82,21 +82,28 @@ class SchoolController extends Controller
             'name'=>'required',
             'province'=>'required',
             'district'=>'required',
+            'tehsil'=>'required',            
             'address'=>'required',
-            'tehsil'=>'required',
-            'emis_code'=>'required',
+            'emis_code'=>['required', 'max:50', 'unique:school'],
             'name_of_focal_person'=>'required',
             'contact_of_focal_person'=>'required',
+            'relation_of_focal_person'=>'required',
             'gps_coordinate'=>'required',
             'school_gender'=>'required',
+            'no_of_students'=>'required',
             'no_of_male_teachers'=>'required',
             'no_of_female_teachers'=>'required',
         ]);
          DB::beginTransaction();
          try{
-            School::create($req->except('_token'));
+            $path=public_path('img/school/');
+            $inputs=$req->except('_token', 'image');
+            if($req->image!=null){
+                $inputs['image']=FileUpload($req->file('image'), $path);
+            }
+            School::create($inputs);
             DB::commit();
-            return redirect('school')->with('success','School Management sccessfully created');
+            return redirect('school')->with('success','School sccessfully added');
          }catch(Exception $ex){
             DB::rollback();
          return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
@@ -192,21 +199,28 @@ class SchoolController extends Controller
             'name'=>'required',
             'province'=>'required',
             'district'=>'required',
+            'tehsil'=>'required',            
             'address'=>'required',
-            'tehsil'=>'required',
-            'emis_code'=>'required',
+            'emis_code'=>['required', 'max:50', 'unique:school,emis_code,'.$id],
             'name_of_focal_person'=>'required',
             'contact_of_focal_person'=>'required',
+            'relation_of_focal_person'=>'required',
             'gps_coordinate'=>'required',
             'school_gender'=>'required',
+            'no_of_students'=>'required',
             'no_of_male_teachers'=>'required',
-            'no_of_female_teachers'=>'required',
+            'no_of_female_teachers'=>'required',        
         ]);
          DB::beginTransaction();
          try{
-             School::find($id)->update($req->except('_token'));
+            $path=public_path('img/school/');
+            $inputs=$req->except('_token', 'image');
+            if($req->image!=null){
+                $inputs['image']=FileUpload($req->file('image'), $path);
+            }
+             School::find($id)->update($inputs);
             DB::commit();
-            return redirect('school')->with('success','School Management sccessfully Updated');
+            return redirect('school')->with('success','School sccessfully updated');
          }catch(Exception $ex){
             DB::rollback();
          return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
@@ -229,7 +243,7 @@ class SchoolController extends Controller
         try{
         School::find($id)->delete();
         DB::commit();
-         return redirect('school')->with('success','School Management successfully deleted');
+         return redirect('school')->with('success','School successfully deleted');
          
          } catch(Exception $e){
             DB::rollback();

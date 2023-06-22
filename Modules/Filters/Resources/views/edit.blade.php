@@ -34,12 +34,10 @@ Filters
             <div class="col-md-6">
               <div class="form-group">
                 <label>Filter Change Frequency</label>
-                <select name="filter_change_frequency" class="form-control" >
-                  <option value="Monthly"{{$filters->filter_change_frequency== "Monthly" ? 'selected' :''}}>Monthly</option>
-                  <option value="Bimonthly"{{$filters->filter_change_frequency== "Bimonthly" ? 'selected' :''}}>Bimonthly</option>
-                  <option value="Trimonthly" {{$filters->filter_change_frequency== "Trimonthly" ? 'selected' :''}}>Trimonthly</option>
-                  <option value="Semiyearly" {{$filters->filter_change_frequency== "Semiyearly" ? 'selected' :''}}>Semiyearly</option>
-                  <option value="Yearly" {{$filters->filter_change_frequency== "Yearly" ? 'selected' :''}}>Yearly</option>
+                <select name="filter_change_frequency" class="form-control select2" >
+                  @foreach (FilterFrequency() as $key=> $ff)
+                 <option value="{{$key}}" {{$filters->filter_change_frequency== $key ? 'selected' :''}}>{{$ff}}</option> -->   
+                  @endforeach
                 </select>
               </div>
             </div>

@@ -78,6 +78,30 @@ function Venders($id)
     }
 }
 
+
+function FocalPersonRelation()
+{
+    $rel=[
+        'teacher'=>'School Teacher',
+        'head_teacher'=>'Head Master/Principal',
+        'volunteer'=>'Volunteer',
+
+    ];
+
+    return $rel;
+}
+
+function SchoolGender()
+{
+    $sg=[
+        'boys'=>'Boys',
+        'girls'=>'Girls',
+        'co-education'=>'Co-Education'
+    ];
+
+    return $sg;
+}
+
 function Filter($id)
 {
     $filter=Filters::find($id);
@@ -111,6 +135,8 @@ function UserDetail($id)
 		return $user;
 	}
 }
+
+
 
 function MenuSearchBar()
 {
@@ -210,9 +236,11 @@ function ColorsPack()
 function FilterFrequency(){
 $Filter_Change_Frequency = [
     'monthly'=>'Monthly',   
-    'bimonthly'=>'Bimonthly',
-    'trimonthly'=>'Trimonthly',
-    'semiyearly'=>'Semiyearly',
+    'bimonthly'=>'Bi-monthly',
+    'trimonthly'=>'Tri-monthly',
+    'quarterly'=>'Quarterly',
+    'semiyearly'=>'Semi-yearly',
+    'halfyearly'=>'Half-Yearly',
     'yearly'=>'Yearly',
 ];
 
@@ -393,3 +421,5 @@ function ProvincesDistricts()
 		return $pd;
 
 }
+
+

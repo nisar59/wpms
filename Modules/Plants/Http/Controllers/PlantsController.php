@@ -34,14 +34,19 @@ class PlantsController extends Controller
            }
                return $action;
            })
+
+           ->editColumn('estimated_cost', function($row)
+           {
+               return number_format($row->estimated_cost);
+           })
            ->addColumn('filters',function($row){
               $filters='';
               foreach($row->filters as $filter){
                 $filters.='<span class="badge bg-info m-1 p-1">'.$filter->name.'</span>';
               }
               return $filters;
-
            })
+
            ->rawColumns(['filters','action'])
            ->make(true);
         }
@@ -68,6 +73,7 @@ class PlantsController extends Controller
         $req->validate([
             'name'=>'required',
             'filters'=>'required',
+            'estimated_cost'=>'required'
         ]);
         DB::beginTransaction();
          try{
@@ -80,15 +86,13 @@ class PlantsController extends Controller
                     ]);
             }
             DB::commit();
-            return redirect('plants')->with('success','Plants sccessfully created');
+            return redirect('plants')->with('success','Plant sccessfully created');
          }catch(Exception $ex){
             DB::rollback();
          return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
         }catch(Throwable $ex){
             DB::rollback();
         return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
-
-
         }
     }
 
@@ -109,8 +113,9 @@ class PlantsController extends Controller
      */
     public function edit($id)
     {
-       /*$plants=(DB::table('plant_filters')->where('plant_id',$id)->get());*/
-        return view('plants::edit'/*,compact('plants')*/);
+       $plant=Plants::with('filters')->find($id);
+       $filters=Filters::all();
+        return view('plants::edit',compact('plant','filters'));
     }
 
     /**
@@ -119,9 +124,34 @@ class PlantsController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $id)
     {
-        //
+        $req->validate([
+            'name'=>'required',
+            'filters'=>'required',
+            'estimated_cost'=>'required'
+        ]);
+        DB::beginTransaction();
+         try{
+            $input=$req->except('_token','filters');
+            $plant=Plants::find($id)->update($input);
+            PlantsFilter::where('plant_id',$id)->delete();
+
+            foreach($req->filters as $filter) {
+                PlantsFilter::create([
+                    'plant_id'   =>$id,
+                    'filter_id' => $filter
+                    ]);
+            }
+            DB::commit();
+            return redirect('plants')->with('success','Plant sccessfully updated');
+         }catch(Exception $ex){
+            DB::rollback();
+         return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
+        }catch(Throwable $ex){
+            DB::rollback();
+        return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
+        }   
     }
 
     /**
@@ -132,20 +162,21 @@ class PlantsController extends Controller
     public function destroy($id)
     {
         
+        DB::beginTransaction();
+         try{
+            Plants::find($id)->delete();
+            PlantsFilter::where('plant_id',$id)->delete();
+            DB::commit();
+            return redirect('plants')->with('success','Plant sccessfully deleted');
+         }catch(Exception $ex){
+            DB::rollback();
+         return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
+        }catch(Throwable $ex){
+            DB::rollback();
+        return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
+        }  
+    }
 
 
-
-         /*   $plant_filter = PlantsFilter::findOrFail($id);
-            $plant = Plants::where('name', $plant_filter->plant_id)->get();
-            foreach ($plant as $plants) {
-                DB::table('plants')->where('name', $plants->id)->delete();
-            }
-            PlantsFilter::where('plant_filters', $plant_filter->plant_id)->delete();
-            }
-*/
-
-
-
-}
 
 }

@@ -1,16 +1,16 @@
 <?php
 
-namespace Modules\Filters\Http\Controllers;
+namespace Modules\Vendors\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Filters\Entities\Filters;
+use Modules\Vendors\Entities\Vendors;
 use Yajra\DataTables\Facades\DataTables;
 use Throwable;
 use DB;
 use Auth;
-class FiltersController extends Controller
+class VendorsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,23 +18,24 @@ class FiltersController extends Controller
      */
     public function index()
     {
-          if (request()->ajax()) {
-        $filters=Filters::select('*')->orderBy('id','ASC')->get();
-           return DataTables::of($filters)
+         if (request()->ajax()) {
+        $vendors=Vendors::select('*')->orderBy('id','ASC')->get();
+           return DataTables::of($vendors)
            ->addColumn('action',function ($row){
                $action='';
-               if(Auth::user()->can('filters.edit')){
-               $action.='<a class="btn btn-primary btn-sm m-1" href="'.url('filters/edit/'.$row->id).'"><i class="fas fa-pencil-alt"></i></a>';
+               if(Auth::user()->can('vendors.edit')){
+               $action.='<a class="btn btn-primary btn-sm m-1" href="'.url('vendors/edit/'.$row->id).'"><i class="fas fa-pencil-alt"></i></a>';
             }
-            if(Auth::user()->can('filters.delete')){
-               $action.='<a class="btn btn-danger btn-sm m-1" href="'.url('filters/destroy/'.$row->id).'"><i class="fas fa-trash-alt"></i></a>';
+            if(Auth::user()->can('vendors.delete')){
+               $action.='<a class="btn btn-danger btn-sm m-1" href="'.url('vendors/destroy/'.$row->id).'"><i class="fas fa-trash-alt"></i></a>';
            }
                return $action;
            })
            ->rawColumns(['action'])
            ->make(true);
         }
-        return view('filters::index');
+
+        return view('vendors::index');
     }
 
     /**
@@ -43,7 +44,7 @@ class FiltersController extends Controller
      */
     public function create()
     {
-        return view('filters::create');
+        return view('vendors::create');
     }
 
     /**
@@ -53,16 +54,20 @@ class FiltersController extends Controller
      */
     public function store(Request $req)
     {
-
         $req->validate([
             'name'=>'required',
-            'filter_change_frequency'=>'required',
+            'email'=>'required',
+            'phone'=>'required',
+            'province'=>'required',
+            'district'=>'required',
+            'shop_or_business_address'=>'required',
+            'dealing_in'=>'required'
         ]);
         DB::beginTransaction();
          try{
-            Filters::create($req->except('_token'));
+            Vendors::create($req->except('_token'));
             DB::commit();
-            return redirect('filters')->with('success','Filter sccessfully created');
+            return redirect('vendors')->with('success','Vendor successfully added');
          }catch(Exception $ex){
             DB::rollback();
          return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
@@ -81,7 +86,7 @@ class FiltersController extends Controller
      */
     public function show($id)
     {
-        return view('filters::show');
+        return view('vendors::show');
     }
 
     /**
@@ -91,8 +96,8 @@ class FiltersController extends Controller
      */
     public function edit($id)
     {
-        $filters=Filters::find($id);
-        return view('filters::edit',compact('filters'));
+        $vendor=Vendors::find($id);
+        return view('vendors::edit',compact('vendor'));
     }
 
     /**
@@ -103,21 +108,27 @@ class FiltersController extends Controller
      */
     public function update(Request $req, $id)
     {
-        $req->validate([
+         $req->validate([
             'name'=>'required',
-            'filter_change_frequency'=>'required',
+            'email'=>'required',
+            'phone'=>'required',
+            'province'=>'required',
+            'district'=>'required',
+            'shop_or_business_address'=>'required',
+            'dealing_in'=>'required'
         ]);
         DB::beginTransaction();
          try{
-             Filters::find($id)->update($req->except('_token'));
+           Vendors::find($id)->update($req->except('_token'));
             DB::commit();
-            return redirect('filters')->with('success','Filter sccessfully Updated');
+            return redirect('vendors')->with('success','Vendor successfully updated');
          }catch(Exception $ex){
             DB::rollback();
          return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
         }catch(Throwable $ex){
             DB::rollback();
         return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
+
 
         }
     }
@@ -129,11 +140,11 @@ class FiltersController extends Controller
      */
     public function destroy($id)
     {
-          DB::beginTransaction();
+        DB::beginTransaction();
         try{
-        Filters::find($id)->delete();
+        Vendors::find($id)->delete();
         DB::commit();
-         return redirect('filters')->with('success','Filter successfully deleted');
+         return redirect('vendors')->with('success','Vender successfully deleted');
          
          } catch(Exception $e){
             DB::rollback();

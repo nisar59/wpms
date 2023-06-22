@@ -8,6 +8,6 @@
     "School": true,
     "Filters": true,
     "Plants": true,
-    "Venders": true,
-    "Stock": true
+    "Stock": true,
+    "Vendors": true
 }

@@ -15,7 +15,7 @@ Plant
     </div>
   </div>
 </div>
-<form action="{{url('plants/store')}}" method="post">
+<form action="{{url('plants/update/'.$plant->id)}}" method="post">
   @csrf
   <div class="row">
     <div class="col-12 col-md-12">
@@ -25,19 +25,31 @@ Plant
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="">Name</label>
-                <input type="text" class="form-control" name="name" value="{{$plants->name}}" placeholder="Enter Name">
+                <input type="text" class="form-control" name="name" value="{{$plant->name}}" placeholder="Enter Name">
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="">Estimated cost</label>
+                <input type="text" class="form-control" name="estimated_cost" value="{{$plant->estimated_cost}}" placeholder="Estimated cost">
+              </div>
+            </div>             
+            <div class="col-md-4">
               <div class="form-group">
                 <label>Filters</label>
                 <select name="filters[]" class="select2 form-control" multiple >
-                  <!-- @foreach($filters as $filter)
-                  <option value="{{$filter->id}}">{{$filter->name}}</option>
-                  @endforeach -->
+                  @foreach($filters as $filter)
+                  <option value="{{$filter->id}}"
+                    @if($plant->filters()->exists())
+                    @foreach($plant->filters as $pf)
+                      {{$pf->id==$filter->id ? "selected" : ""}}
+                    @endforeach
+                    @endif
+                    >{{$filter->name}}</option>
+                  @endforeach
                 </select>
               </div>
             </div>

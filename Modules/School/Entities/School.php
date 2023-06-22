@@ -9,7 +9,7 @@ class School extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','province','district','address','tehsil','emis_code','name_of_focal_person','contact_of_focal_person','gps_coordinate','school_gender','no_of_male_teachers','no_of_female_teachers'];
+    protected $fillable = ['name','province','district','address','tehsil','emis_code','name_of_focal_person','contact_of_focal_person','relation_of_focal_person','gps_coordinate','school_gender','no_of_students','no_of_male_teachers','no_of_female_teachers','image'];
     protected $table='school';
     
     protected static function newFactory()

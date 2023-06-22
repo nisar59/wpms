@@ -100,3 +100,24 @@ div.penal-settings>a.active:after {
     border: 1px solid #006BA6;
 }
 
+label{
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.extends{
+    position: fixed;
+    width: 78%;
+    height: 78% !important;
+    margin: auto;
+    z-index: 1111;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border: 5px solid #006BA6;
+
+}
+.element{
+    transition: width 3s, height 1s ;
+}

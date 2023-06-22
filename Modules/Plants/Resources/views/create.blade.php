@@ -25,13 +25,19 @@ Plant
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <div class="form-group">
                 <label for="">Name</label>
                 <input type="text" class="form-control" name="name" placeholder="Enter Name">
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="">Estimated cost</label>
+                <input type="text" class="form-control" name="estimated_cost" placeholder="Estimated cost">
+              </div>
+            </div>            
+            <div class="col-md-4">
               <div class="form-group">
                 <label>Filters</label>
                 <select name="filters[]" class="select2 form-control" multiple >
@@ -55,7 +61,7 @@ Plant
 @section('js')
 <script type="text/javascript">
     $(document).ready(function() {
-        $('select2').selectpicker();
+
     });
 </script>
 @endsection
