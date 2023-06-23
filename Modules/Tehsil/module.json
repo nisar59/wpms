@@ -1,0 +1,11 @@
+{
+    "name": "Tehsil",
+    "alias": "tehsil",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Tehsil\\Providers\\TehsilServiceProvider"
+    ],
+    "files": []
+}

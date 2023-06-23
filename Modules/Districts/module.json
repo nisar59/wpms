@@ -1,0 +1,11 @@
+{
+    "name": "Districts",
+    "alias": "districts",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Districts\\Providers\\DistrictsServiceProvider"
+    ],
+    "files": []
+}

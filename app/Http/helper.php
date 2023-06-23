@@ -10,6 +10,9 @@ use Modules\Filters\Entities\Filters;
 use Modules\School\Entities\School;
 use Modules\Logs\Entities\SystemLogs;
 use Modules\Plants\Entities\Plants;
+use Modules\Country\Entities\Country;
+use Modules\State\Entities\State;
+use Modules\Districts\Entities\Districts;
 use Illuminate\Support\Facades\Http;
 function AllPermissions()
 {
@@ -117,6 +120,35 @@ function Plants($id)
         return $plant->name;
     }
 }
+
+
+function Country($id)
+{
+    $country=Country::find($id);
+    if($country!=null){
+        return $country->name;
+    }
+}
+
+
+function State($id)
+{
+    $state=State::find($id);
+    if($state!=null){
+        return $state->name;
+    }
+}
+
+
+function Districts($id)
+{
+    $des=Districts::find($id);
+    if($des!=null){
+        return $des->name;
+    }
+}
+
+
 
 function School($id)
 {

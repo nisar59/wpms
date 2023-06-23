@@ -44,8 +44,30 @@ $type = Request()->type;
                         @can('vendors')
                         <li><a href="{{url('vendors')}}">Vendor Management</a></li>
                         @endcan
-                        <!-- Settings -->
 
+                        <!-- country -->
+                        @can('country')
+                        <li><a href="{{url('country')}}">Country</a></li>
+                        @endcan
+                        
+
+                         <!-- state -->
+                        @can('state')
+                        <li><a href="{{url('state')}}">State / Provinces</a></li>
+                        @endcan
+
+                        <!-- district -->
+                        @can('district')
+                        <li><a href="{{url('districts')}}">Districts</a></li>
+                        @endcan
+
+                        <!-- tehsil -->
+                        @can('tehsil')
+                        <li><a href="{{url('tehsil')}}">Tehsils</a></li>
+                        @endcan
+
+
+                        <!-- Settings -->
                         @can('settings')
                         <li><a href="{{url('settings')}}" class="waves-effect">Penal Settings</a></li>
                         @endcan

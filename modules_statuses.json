@@ -9,5 +9,9 @@
     "Filters": true,
     "Plants": true,
     "Stock": true,
-    "Vendors": true
+    "Vendors": true,
+    "Country": true,
+    "State": true,
+    "Districts": true,
+    "Tehsil": true
 }
