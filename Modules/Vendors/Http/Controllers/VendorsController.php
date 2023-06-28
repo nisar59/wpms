@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Vendors\Entities\Vendors;
+use Modules\Plants\Entities\Plants;
 use Yajra\DataTables\Facades\DataTables;
 use Throwable;
 use DB;
@@ -31,6 +32,10 @@ class VendorsController extends Controller
            }
                return $action;
            })
+           ->editColumn('dealing_in',function($row)
+           {
+               return Plants($row->dealing_in);
+           })
            ->rawColumns(['action'])
            ->make(true);
         }
@@ -44,7 +49,8 @@ class VendorsController extends Controller
      */
     public function create()
     {
-        return view('vendors::create');
+        $plants=Plants::all();
+        return view('vendors::create')->withPlants($plants);
     }
 
     /**
@@ -97,7 +103,8 @@ class VendorsController extends Controller
     public function edit($id)
     {
         $vendor=Vendors::find($id);
-        return view('vendors::edit',compact('vendor'));
+        $plants=Plants::all();
+        return view('vendors::edit',compact('vendor','plants'));
     }
 
     /**

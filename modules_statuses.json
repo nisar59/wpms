@@ -13,5 +13,6 @@
     "Country": true,
     "State": true,
     "Districts": true,
-    "Tehsil": true
+    "Tehsil": true,
+    "WaterQualityTest": true
 }

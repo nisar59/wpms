@@ -15,184 +15,117 @@ School Management
     </div>
   </div>
 </div>
-
 <div class="card card-primary">
-  <div class="card-header bg-white row m-0">
-    <h4 class="col-6">School Information</h4>
-    <div class="col-6 text-end">
-      <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-sm btn-success">+ Add Plant</a>
-      <a href="{{url('school/stock/'.$school->id)}}" class="btn btn-sm btn-primary">+ Add Stock</a>
-    </div>
+  <div class="card-header bg-white m-0 p-0">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active fw-bold fs-5" id="school-info-tab" data-bs-toggle="tab" data-bs-target="#school-info" type="button" role="tab" aria-controls="school-info" aria-selected="true">School Information</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fw-bold fs-5" id="water-test-tab" data-bs-toggle="tab" data-bs-target="#water-test" type="button" role="tab" aria-controls="water-test" aria-selected="false">Water Test</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fw-bold fs-5" id="water-plant-tab" data-bs-toggle="tab" data-bs-target="#water-plant" type="button" role="tab" aria-controls="water-plant" aria-selected="false">Water Plant</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fw-bold fs-5" id="stock-tab" data-bs-toggle="tab" data-bs-target="#stock" type="button" role="tab" aria-controls="stock" aria-selected="false">Stock</button>
+      </li>
+    </ul>
   </div>
-  <hr class="m-0">
   <div class="card-body">
-    <div class="row">
-      <div class="col-8 row">
-      <div class="col-md-3">
-        <label for="">Name</label><br>
-        <span>{{$school->name}}</span>
-      </div>
-      <div class="col-md-3">
-        <label for="">Province</label><br>
-        <span>{{$school->province}}</span>
-      </div>
-      <div class="col-md-3">
-        <label for="">District</label><br>
-        <span>{{$school->district}}</span>
-      </div>
-      <div class="col-md-3">
-        <label for="">Address</label><br>
-        <span>{{$school->address}}</span>
-      </div>
-
-      <div class="col-md-3">
-        <label for="">Tehsil</label><br>
-        <span>{{$school->tehsil}}</span>
-      </div>
-      <div class="col-md-3">
-        <label for="">EMIS Code</label><br>
-        <span>{{$school->emis_code}}</span>
-      </div>
-      <div class="col-md-3">
-        <label for="">Name Of Focal Person</label><br>
-        <span>{{$school->name_of_focal_person}}</span>
-      </div>
-      <div class="col-md-3">
-        <label for="">Contact Of Focal Person</label><br>
-        <span>{{$school->contact_of_focal_person}}</span>
-      </div>
-
-      <div class="col-md-3">
-        <label for="">GPS Coordinates</label><br>
-        <span>{{$school->gps_coordinate}}</span>
-      </div>
-      <div class="col-md-3">
-        <label for="">School Gender</label><br>
-        <span>{{$school->school_gender}}</span>
-      </div>
-      <div class="col-md-3">
-        <label for="">Name Of Male Teacher</label><br>
-        <span>{{$school->no_of_male_teachers}}</span>
-      </div>
-      <div class="col-md-3">
-        <label for="">Contact Of Female Teacher</label><br>
-        <span>{{$school->no_of_female_teachers}}</span>
-      </div>
-
-
-      </div>
-      <div class="col-4 row">
-        <div class="col-12">
-          <img class="element" src="{{url('img/school/'.$school->image)}}" width="100%" height="100vh">
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="school-info" role="tabpanel" aria-labelledby="school-info-tab">
+        <div class="row">
+          <div class="col-8 row">
+            <div class="col-md-3">
+              <label for="">Name</label><br>
+              <span>{{$school->name}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">School Gender</label><br>
+              <span>{{$school->school_gender}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">Province</label><br>
+              <span>{{$school->province}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">District</label><br>
+              <span>{{$school->district}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">Tehsil</label><br>
+              <span>{{$school->tehsil}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">Address</label><br>
+              <span>{{$school->address}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">EMIS Code</label><br>
+              <span>{{$school->emis_code}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">Name Of Focal Person</label><br>
+              <span>{{$school->name_of_focal_person}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">Contact Of Focal Person</label><br>
+              <span>{{$school->contact_of_focal_person}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">Relation of Focal Person</label><br>
+              <span>{{$school->relation_of_focal_person}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">No of Students</label><br>
+              <span>{{$school->no_of_students}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">No Of Male Teachers</label><br>
+              <span>{{$school->no_of_male_teachers}}</span>
+            </div>
+            <div class="col-md-3">
+              <label for="">No Of Female Teachers</label><br>
+              <span>{{$school->no_of_female_teachers}}</span>
+            </div>
+          </div>
+          <div class="col-4 row">
+            <div class="col-12">
+              <img class="element" src="{{url('img/school/'.$school->image)}}" width="100%" height="100vh">
+            </div>
+            <div class="col-12 mt-3 element p-0">
+              <iframe width="100%" height="100%" src = "https://maps.google.com/maps?q={{$school->gps_coordinate}}&hl=es;z=14&amp;output=embed"></iframe>
+            </div>
+          </div>
         </div>
-        <div class="col-12 mt-3 element p-0">
-        <iframe width="100%" height="100%" src = "https://maps.google.com/maps?q={{$school->gps_coordinate}}&hl=es;z=14&amp;output=embed"></iframe>
+      </div>
+      <div class="tab-pane fade" id="water-test" role="tabpanel" aria-labelledby="water-test-tab">
+        <div class="row">
+          <div class="col-md-12 text-end">
+            <a href="javascript::void(0)" id="water-test-modal">+</a>
+          </div>
+          <div class="col-md-12 text-center">
+            <h4>Pending for sample</h4>
+          </div>
         </div>
       </div>
+      <div class="tab-pane fade" id="water-plant" role="tabpanel" aria-labelledby="water-plant-tab">Water Plant</div>
+      <div class="tab-pane fade" id="stock" role="tabpanel" aria-labelledby="stock-tab">Stock</div>
     </div>
   </div>
 </div>
 
+@include('school::includes.sample-collected')
 
-  @endsection
-  @section('js')
-  <script type="text/javascript">
-  $.ajaxSetup({
-  headers: {
-  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
+@endsection
+@section('js')
+<script>
+$(document).ready(function() {
+  $(document).on('click', '#water-test-modal', function() {
+        $("#sample-collected").modal('show');
   });
-  $(".submit").click(function(e) {
-  e.preventDefault();
-  var plant_id = $('#p_id').val();
-  var school_id = $('#school_id').val();
-  var url = "{{url('school/savedata')}}";
-  $.ajax({
-    url: url,
-    method: 'POST',
-    data: {
-      plant_id: plant_id,
-      school_id: school_id
-    },
-    success: function(response) {
-      if (response.success) {
-        alert(response.message)
-        $('#exampleModal').modal('hide');
-        location.reload();
-      } else {
-        alert("Error")
-      }
-    },
-    error: function(error) {
-      console.log(error)
-    }
-  });
+
 });
-  $(document).ready(function() {
-  var roles_table = $('#stock').DataTable({
-  processing: true,
-  serverSide: true,
-  ajax: "{{url('stock')}}",
-  buttons: [],
-  columns: [{
-  data: 'name',
-  name: 'name',
-  class: 'text-center'
-  }, {
-  data: 'costodian_number',
-  name: 'costodian_number',
-  class: 'text-center'
-  }, {
-  data: 'relation',
-  name: 'relation',
-  class: 'text-center'
-  }, {
-  data: 'filter',
-  name: 'filter',
-  class: 'text-center'
-  }, {
-  data: 'no_of_filter',
-  name: 'no_of_filter',
-  class: 'text-center'
-  }, {
-  data: 'received_date',
-  name: 'received_date',
-  class: 'text-center'
-  }, {
-  data: 'vender',
-  name: 'vender',
-  class: 'text-center'
-  }, {
-  data: 'action',
-  name: 'action',
-  orderable: false,
-  searchable: false,
-  class: 'text-center'
-  }, ]
-  });
-
-
-
-
-
-    $(document).on('click', '.element', function(){
-        $('.element').removeClass('extends');
-        $(this).addClass('extends');
-
-    });
-
-   $(document).on('click', function(){
-    console.log($('.element').length);
-      if(!$(event.target).closest(".element").length){
-        $('.element').removeClass('extends');
-      }
-   });
-
-
-
-
-
-
-  });
-  </script>
-  @endsection
+</script>
+@endsection

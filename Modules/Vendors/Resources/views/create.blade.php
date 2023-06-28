@@ -27,8 +27,8 @@ Vendor Management
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="">Name</label>
-                <input type="text" class="form-control" name="name" placeholder="Enter Name">
+                <label for="">Vendor Name</label>
+                <input type="text" class="form-control" name="name" placeholder="Enter Vendor Name">
               </div>
             </div>
             <div class="col-md-6">
@@ -70,11 +70,12 @@ Vendor Management
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="">Deal In</label>
+                <label for="">Deals In</label>
                   <select name="dealing_in" id="dealing_in" class="form-control">
                   <option value="">Select a option</option>
-                  <option value="filters">filters</option>
-                  <option value="plants">plants</option>
+                  @foreach($plants as $plant)
+                  <option value="{{$plant->id}}">{{$plant->name}}</option>
+                  @endforeach
                 </select>
               </div>
             </div>

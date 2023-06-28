@@ -1,0 +1,11 @@
+{
+    "name": "WaterQualityTest",
+    "alias": "waterqualitytest",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\WaterQualityTest\\Providers\\WaterQualityTestServiceProvider"
+    ],
+    "files": []
+}

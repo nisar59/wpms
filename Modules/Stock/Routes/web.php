@@ -11,9 +11,7 @@
 |
 */
 
-/*Route::prefix('stock')->group(function() {
-    Route::get('/', 'StockController@index');
-});*/
+
 Route::group(['prefix'=>'stock','middleware' => ['permission:stock.view']],function(){
 	Route::get('/', 'StockController@index');
 });

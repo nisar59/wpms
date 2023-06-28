@@ -35,10 +35,6 @@ class PlantsController extends Controller
                return $action;
            })
 
-           ->editColumn('estimated_cost', function($row)
-           {
-               return number_format($row->estimated_cost);
-           })
            ->addColumn('filters',function($row){
               $filters='';
               foreach($row->filters as $filter){
@@ -73,7 +69,6 @@ class PlantsController extends Controller
         $req->validate([
             'name'=>'required',
             'filters'=>'required',
-            'estimated_cost'=>'required'
         ]);
         DB::beginTransaction();
          try{
@@ -129,7 +124,6 @@ class PlantsController extends Controller
         $req->validate([
             'name'=>'required',
             'filters'=>'required',
-            'estimated_cost'=>'required'
         ]);
         DB::beginTransaction();
          try{

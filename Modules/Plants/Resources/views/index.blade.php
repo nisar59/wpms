@@ -31,8 +31,7 @@ Plants
           <table class="table table-sm table-hover table-bordered" id="plants" style="width:100%;">
             <thead class="text-center bg-primary text-white">
               <tr>
-                <th>Name</th>
-                <th>Estimated Cost</th>
+                <th>Plant Type</th>
                 <th>Filters</th>
                 <th>Action</th>
               </tr>
@@ -57,7 +56,6 @@ Plants
               buttons:[],
               columns: [
                 {data: 'name', name: 'name',class:'text-center'},
-                {data: 'estimated_cost', name: 'estimated_cost',class:'text-center'},
                 {data: 'filters', name: 'filters',class:'text-center'},
                 {data: 'action', name: 'action', orderable: false, searchable: false ,class:'text-center'},
             ]

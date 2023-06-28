@@ -53,7 +53,7 @@ $type = Request()->type;
 
                          <!-- state -->
                         @can('state')
-                        <li><a href="{{url('state')}}">State / Provinces</a></li>
+                        <li><a href="{{url('state')}}">States / Provinces</a></li>
                         @endcan
 
                         <!-- district -->

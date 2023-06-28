@@ -10,7 +10,7 @@ class Plants extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','estimated_cost'];
+    protected $fillable = ['name'];
     protected $table='plants';
     
     protected static function newFactory()
