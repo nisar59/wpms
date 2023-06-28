@@ -26,7 +26,8 @@ function AllPermissions()
 	$role['permissions']=['view','add','edit','delete'];
 	$role['trash']=['view','edit','delete'];	
 	$role['logs']=['view','delete'];	
-	$role['settings']=['view','add','edit','delete'];
+    $role['settings']=['view','add','edit','delete'];
+	$role['water-test-quality-parameter']=['view','add','edit','delete'];
 
 return $role;
 
