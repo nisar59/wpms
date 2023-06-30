@@ -15,5 +15,7 @@
     "Districts": true,
     "Tehsil": true,
     "WaterQualityTest": true,
-    "WaterTestQualityParameter": true
+    "WaterTestQualityParameter": true,
+    "Doner": true,
+    "Doners": true
 }

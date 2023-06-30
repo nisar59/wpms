@@ -65,9 +65,13 @@ $type = Request()->type;
                         @can('tehsil')
                         <li><a href="{{url('tehsil')}}">Tehsils</a></li>
                         @endcan
-                        <!-- tehsil -->
+                        <!-- water-test-quality-parameter -->
                         @can('water-test-quality-parameter')
                         <li><a href="{{url('water-test-quality-parameter')}}">Water Test Quality Parameter</a></li>
+                        @endcan
+                        <!-- doners -->
+                        @can('doner')
+                        <li><a href="{{url('doners')}}">Doners</a></li>
                         @endcan
 
 
