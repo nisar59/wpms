@@ -1,16 +1,16 @@
 @extends('layouts.template')
 @section('title')
-Water Test Quality Parameters
+Donors 
 @endsection
 @section('content')
 <div class="page-title-box">
   <div class="row align-items-center">
     <div class="col-md-8">
-      <h6 class="page-title">Water Test Quality Parameters</h6>
+      <h6 class="page-title">Donors</h6>
       <ol class="breadcrumb m-0">
         <li class="breadcrumb-item">{{Settings()->portal_name}}</li>
-        <li class="breadcrumb-item">Water Test Quality Parameters</li>
-        <li class="breadcrumb-item active">Water Test Quality Parameters</li>
+        <li class="breadcrumb-item"> Donors</li>
+        <li class="breadcrumb-item active">Donors</li>
       </ol>
     </div>
   </div>
@@ -20,19 +20,24 @@ Water Test Quality Parameters
     <div class="card card-primary">
       <div class="card-header bg-white">
         <div class="row">
-          <h4 class="col-md-6">Water Test Quality Parameters</h4>
+          <h4 class="col-md-6">Donors</h4>
           <div class="col-md-6 text-end">
-            <a href="{{url('water-test-quality-parameter/create')}}" class="btn btn-success">+</a>
+            <a href="{{url('donors/create')}}" class="btn btn-success">+</a>
           </div>
         </div>
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-sm table-hover table-bordered" id="watertestqualityparameter" style="width:100%;">
+          <table class="table table-sm table-hover table-bordered" id="donors" style="width:100%;">
             <thead class="text-center bg-primary text-white">
               <tr>
                 <th>Name</th>
-                <th>Parameter</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>District</th>
+                <th>Address</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -49,14 +54,19 @@ Water Test Quality Parameters
 <script type="text/javascript">
     //Roles table
     $(document).ready( function(){
-  var roles_table = $('#watertestqualityparameter').DataTable({
+  var roles_table = $('#donors').DataTable({
               processing: true,
               serverSide: true,
-              ajax: "{{url('water-test-quality-parameter')}}",
+              ajax: "{{url('donors')}}",
               buttons:[],
               columns: [
                 {data: 'name', name: 'name',class:'text-center'},
-                {data: 'parameter', name: 'parameter',class:'text-center'},
+                {data: 'email', name: 'email',class:'text-center'},
+                {data: 'phone', name: 'phone',class:'text-center'},
+                {data: 'country', name: 'country',class:'text-center'},
+                {data: 'state', name: 'state',class:'text-center'},
+                {data: 'district', name: 'district',class:'text-center'},
+                {data: 'address', name: 'address',class:'text-center'},
                 {data: 'action', name: 'action', orderable: false, searchable: false ,class:'text-center'},
             ]
           });

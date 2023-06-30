@@ -55,6 +55,7 @@ class WaterTestQualityParameterController extends Controller
     {
          $req->validate([
             'name'=>'required',
+            'parameter'=>'required',
         ]);
         DB::beginTransaction();
          try{
@@ -103,6 +104,7 @@ class WaterTestQualityParameterController extends Controller
     {
          $req->validate([
             'name'=>'required',
+            'parameter'=>'required',
         ]);
         DB::beginTransaction();
          try{
