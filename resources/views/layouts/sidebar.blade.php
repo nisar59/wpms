@@ -8,8 +8,8 @@ $type = Request()->type;
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title">Main</li>
-                <li @if ($pref == '') class="mm-active" @endif>
+<!--                 <li class="menu-title">Main</li>
+ -->                <li @if ($pref == '') class="mm-active" @endif>
                     <a href="{{url('/')}}" class="waves-effect">
                         <i class="ti-home"></i>
                         <span>Dashboard</span>
@@ -65,6 +65,14 @@ $type = Request()->type;
                         @can('tehsil')
                         <li><a href="{{url('tehsil')}}">Tehsils</a></li>
                         @endcan
+                        <!-- water-test-quality-parameter -->
+                        @can('water-test-quality-parameter')
+                        <li><a href="{{url('water-quality-test-parameters')}}">Water Test Quality Parameter</a></li>
+                        @endcan
+                        <!-- doners -->
+                        @can('donors')
+                        <li><a href="{{url('donors')}}">Donors</a></li>
+                        @endcan
 
 
                         <!-- Settings -->
@@ -76,8 +84,8 @@ $type = Request()->type;
                 </li>
                 <!-- School Management -->
                 @can('school')
-                <li class="menu-title">School Management</li>
-                <li>
+<!--                 <li class="menu-title">School Management</li>
+ -->                <li>
                     <a href="{{url('school')}}" class="waves-effect">
                         <i class="fas fa-building"></i>
                         <span>School Management</span>
