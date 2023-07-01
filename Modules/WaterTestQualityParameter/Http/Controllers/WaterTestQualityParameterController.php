@@ -24,10 +24,10 @@ class WaterTestQualityParameterController extends Controller
            ->addColumn('action',function ($row){
                $action='';
                if(Auth::user()->can('water-test-quality-parameter.edit')){
-               $action.='<a class="btn btn-primary btn-sm m-1" href="'.url('water-test-quality-parameter/edit/'.$row->id).'"><i class="fas fa-pencil-alt"></i></a>';
+               $action.='<a class="btn btn-primary btn-sm m-1" href="'.url('water-quality-test-parameters/edit/'.$row->id).'"><i class="fas fa-pencil-alt"></i></a>';
             }
             if(Auth::user()->can('water-test-quality-parameter.delete')){
-               $action.='<a class="btn btn-danger btn-sm m-1" href="'.url('water-test-quality-parameter/destroy/'.$row->id).'"><i class="fas fa-trash-alt"></i></a>';
+               $action.='<a class="btn btn-danger btn-sm m-1" href="'.url('water-quality-test-parameters/destroy/'.$row->id).'"><i class="fas fa-trash-alt"></i></a>';
            }
                return $action;
            })
@@ -55,13 +55,12 @@ class WaterTestQualityParameterController extends Controller
     {
          $req->validate([
             'name'=>'required',
-            'parameter'=>'required',
         ]);
         DB::beginTransaction();
          try{
             WaterTestQualityParameter::create($req->except('_token'));
             DB::commit();
-            return redirect('water-test-quality-parameter')->with('success','Water Test Quality Parameter sccessfully created');
+            return redirect('water-quality-test-parameters')->with('success','Water Quality Test Parameters sccessfully created');
          }catch(Exception $ex){
             DB::rollback();
          return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
@@ -104,13 +103,12 @@ class WaterTestQualityParameterController extends Controller
     {
          $req->validate([
             'name'=>'required',
-            'parameter'=>'required',
         ]);
         DB::beginTransaction();
          try{
             WaterTestQualityParameter::find($id)->update($req->except('_token'));
             DB::commit();
-            return redirect('water-test-quality-parameter')->with('success','Water Test Quality Parameter sccessfully Updated');
+            return redirect('water-quality-test-parameters')->with('success','Water Quality Test Parameters sccessfully Updated');
          }catch(Exception $ex){
             DB::rollback();
          return redirect()->back()->with('error','Something went wrong with this error: '.$ex->getMessage());
@@ -133,7 +131,7 @@ class WaterTestQualityParameterController extends Controller
         try{
         WaterTestQualityParameter::find($id)->delete();
         DB::commit();
-         return redirect('water-test-quality-parameter')->with('success','Water Test Quality Parameter successfully deleted');
+         return redirect('water-quality-test-parameters')->with('success','Water Quality Test Parameters successfully deleted');
          
          } catch(Exception $e){
             DB::rollback();
