@@ -9,7 +9,6 @@ use Modules\School\Entities\School;
 use Modules\School\Entities\SchoolPlants;
 use Modules\Plants\Entities\Plants;
 use Modules\Filters\Entities\Filters;
-use Modules\Venders\Entities\Venders;
 use Modules\Stock\Entities\Stock;
 use Yajra\DataTables\Facades\DataTables;
 use Throwable;
@@ -123,9 +122,7 @@ class SchoolController extends Controller
     public function show($id)
     {
         $school=School::find($id);
-        $plants=Plants::all();
-        $sch_plnt=SchoolPlants::all();
-        return view('school::show',compact('school','plants','sch_plnt'));
+        return view('school::show',compact('school'));
     }
 
     /**
@@ -134,22 +131,35 @@ class SchoolController extends Controller
      * @return Renderable
      */
 
-     public function schoolPlant(Request $req)
+     public function addplant(Request $req, $id)
     {
         $req->validate([
             'plant_id'=>'required',
-        ]);
-        DB::table('school_plants')->insert([
-            'plant_id' => $req->plant_id, 
-            'school_id' => $req->school_id,  
+            'vendor_id'=>'required'
         ]);
 
-        return response()->json(
-            [
-                'success' => true,
-                'message' => 'Data inserted successfully'
-            ]
-        );
+        DB::beginTransaction();
+        try{
+        $school=SchoolPlants::create([
+            'school_id'=>$id,
+            'plant_id'=>$req->plant_id,
+            'vendor_id'=>$req->vendor_id,
+            'estimated_cost'=>$req->estimated_cost,
+            'status'=>0
+        ]);
+        DB::commit();
+         return redirect('school/show/'.$id)->with('success','School Plants successfully updated');
+         
+         } catch(Exception $e){
+            DB::rollback();
+            return redirect()->back()->with('error','Something went wrong with this error: '.$e->getMessage());
+         }catch(Throwable $e){
+            DB::rollback();
+            return redirect()->back()->with('error','Something went wrong with this error: '.$e->getMessage());
+         }
+
+
+
     }
 
        /**

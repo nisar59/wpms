@@ -9,7 +9,8 @@ class WaterQualityTest extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $table='water_quality_test';
+    protected $fillable = ['school_id','sample_collected_date','status','test_completed_date','results','remarks'];
     
     protected static function newFactory()
     {

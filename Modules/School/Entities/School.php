@@ -4,6 +4,8 @@ namespace Modules\School\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\WaterQualityTest\Entities\WaterQualityTest;
+use Modules\School\Entities\SchoolPlants;
 
 class School extends Model
 {
@@ -16,4 +18,22 @@ class School extends Model
     {
         return \Modules\School\Database\factories\SchoolFactory::new();
     }
+
+    public function WaterQualityTest()
+    {
+      return $this->hasMany(WaterQualityTest::class, 'school_id','id')->orderBy('id','ASC');  
+    }
+
+    public function WaterQualityTestSampleCollected()
+    {
+        return $this->hasOne(WaterQualityTest::class, 'school_id','id')->where('status',1);
+    }
+
+
+    public function SchoolPlants()
+    {
+        return $this->hasMany(SchoolPlants::class, 'school_id');
+    }
+
+
 }

@@ -2,6 +2,16 @@
 @section('title')
 School Management
 @endsection
+@section('css')
+<style>
+.border-info-left{
+border-left: 3px solid skyblue;
+}
+.border-success-left{
+border-left: 3px solid green;
+}
+</style>
+@endsection
 @section('content')
 <div class="page-title-box">
   <div class="row align-items-center">
@@ -103,29 +113,138 @@ School Management
       <div class="tab-pane fade" id="water-test" role="tabpanel" aria-labelledby="water-test-tab">
         <div class="row">
           <div class="col-md-12 text-end">
-            <a href="javascript::void(0)" id="water-test-modal">+</a>
+            @if($school->WaterQualityTestSampleCollected==null)
+            <a href="javascript:void(0)" id="sample-collected-modal">+</a>
+            @endif
           </div>
           <div class="col-md-12 text-center">
+            @if($school->WaterQualityTest->count()==0)
             <h4>Pending for sample</h4>
+            @else
+            @foreach($school->WaterQualityTest as $wqt)
+            @if($wqt->status==1)
+            <a href="javascript:void(0)" data-id="{{$wqt->id}}" class="test-completed-modal border-info-left mb-2 text-dark card p-2 table-hover">
+              <div class="row">
+                <div class="col-6">
+                  <p class="m-0"><b>Status:</b> {{WaterQualityTestStatus()[$wqt->status]}}</p>
+                </div>
+                <div class="col-6">
+                  <p class="m-0"><b>Sample Collected Date:</b> {{\Carbon\Carbon::parse($wqt->sample_collected_date)->format('d-m-Y')}}</p>
+                </div>
+              </div>
+            </a>
+            @else
+            <a href="javascript:void(0)" data-id="{{$wqt->id}}" class="test-completed-modal border-success-left mb-2 text-dark card p-2 table-hover">
+              <div class="row">
+                <div class="col-2">
+                  <p class="m-0"><b>Sample Collected Date:</b> <br>{{\Carbon\Carbon::parse($wqt->sample_collected_date)->format('d-m-Y')}}</p>
+                </div>
+                <div class="col-2">
+                  <p class="m-0"><b>Status:</b> <br>{{WaterQualityTestStatus()[$wqt->status]}}</p>
+                </div>
+                <div class="col-2">
+                  <p class="m-0"><b>Test Completed Date:</b> <br>{{\Carbon\Carbon::parse($wqt->test_completed_date)->format('d-m-Y')}}</p>
+                </div>
+                @php
+                $i=1;
+                @endphp
+                
+                @foreach(WaterQualityTestParameters() as $key=> $wqtp)
+                
+                @if($i>3) @break; @endif
+                @php $i=$i+1; @endphp
+                @php
+                $results=json_decode($wqt->results);
+                $val='';
+                if($results!=null && isset($results->$key)){
+                $val=$results->$key;
+                }
+                @endphp
+                <div class="col-2">
+                  <p class="m-0"><b>{{$wqtp}}</b> <br>{{$val}}</p>
+                </div>
+                @endforeach
+              </div>
+            </a>
+            @endif
+            @endforeach
+            @endif
           </div>
         </div>
       </div>
-      <div class="tab-pane fade" id="water-plant" role="tabpanel" aria-labelledby="water-plant-tab">Water Plant</div>
+      <div class="tab-pane fade" id="water-plant" role="tabpanel" aria-labelledby="water-plant-tab">
+        <div class="row">
+          <div class="col-12 text-end">
+            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#add-plant">+</a>
+          </div>
+
+          <div class="col-12">
+
+            <div class="accordion" id="accordionPlants">
+              @foreach($school->SchoolPlants as $sp)
+                  <div class="accordion-item card">
+                    <div class="accordion-header border border-info-left" id="heading{{$sp->id}}">
+                      <div class="row text-center" data-bs-toggle="collapse" data-bs-target="#collapse{{$sp->id}}" aria-expanded="false" aria-controls="collapse{{$sp->id}}">
+                        <div class="col-3">
+                            <p class="m-0"><b>Plant Name:</b> <br>{{$sp->Plant!=null ? $sp->Plant->name : ''}}</p>
+                        </div>
+                        <div class="col-3">
+                          <p class="m-0"><b>Vendor:</b> <br> {{$sp->Vendor!=null ? $sp->Vendor->name : ''}}</p>
+                        </div>
+                        <div class="col-3">
+                          <p class="m-0"><b>Estimated Cost:</b> <br> {{number_format($sp->estimated_cost)}}</p>
+                        </div>
+                        <div class="col-3">
+                          <p class="m-0"><b>Status:</b><br> {{SchoolPlantStatus()[$sp->status]}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="collapse{{$sp->id}}" class="accordion-collapse collapse" aria-labelledby="heading{{$sp->id}}" data-bs-parent="#accordionPlants">
+                      <div class="accordion-body border">
+
+                      </div>
+                    </div>
+                  </div>
+              @endforeach
+
+            </div>
+          </div>
+
+        </div>
+      </div>
       <div class="tab-pane fade" id="stock" role="tabpanel" aria-labelledby="stock-tab">Stock</div>
     </div>
   </div>
 </div>
-
-@include('school::includes.sample-collected')
-
+@include('waterqualitytest::create')
+@include('school::add-plant')
+<div id="mdl"></div>
 @endsection
 @section('js')
 <script>
 $(document).ready(function() {
-  $(document).on('click', '#water-test-modal', function() {
-        $("#sample-collected").modal('show');
-  });
-
+$(document).on('click', '#sample-collected-modal', function() {
+$("#sample-collected").modal('show');
+});
+$(document).on('click', '.test-completed-modal', function() {
+var id=$(this).data('id');
+$.ajax({
+url:"{{url('water-quality-test/edit')}}/"+id,
+type:"GET",
+success:function(res) {
+if(res.success){
+$("#mdl").html(res.data);
+$("#test-completed").modal('show');
+}else{
+error(res.message);
+}
+},
+error:function(err) {
+console.log(err);
+error(err.responseText);
+}
+});
+});
 });
 </script>
 @endsection

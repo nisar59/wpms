@@ -21,9 +21,7 @@ Route::group(['prefix'=>'water-quality-test','middleware' => ['permission:water-
 });
 
 Route::group(['prefix'=>'water-quality-test','middleware' => ['permission:water-quality-test.add']],function(){
-    Route::get('/create', 'WaterQualityTestController@create');
-    Route::POST('/store', 'WaterQualityTestController@store');
-
+    Route::POST('/store/{id}', 'WaterQualityTestController@store');
 });
 Route::group(['prefix'=>'water-quality-test','middleware' => ['permission:water-quality-test.edit']],function(){
     Route::get('/edit/{id}', 'WaterQualityTestController@edit');

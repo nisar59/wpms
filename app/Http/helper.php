@@ -1,11 +1,8 @@
 <?php
 use Modules\Settings\Entities\Settings;
 use App\Models\User;
-use Modules\Clients\Entities\Client;
-use Modules\Desks\Entities\Desk;
 use Modules\Logs\Entities\Logs;
 use Modules\Stock\Entities\Stock;
-use Modules\Venders\Entities\Venders;
 use Modules\Filters\Entities\Filters;
 use Modules\School\Entities\School;
 use Modules\Logs\Entities\SystemLogs;
@@ -13,6 +10,7 @@ use Modules\Plants\Entities\Plants;
 use Modules\Country\Entities\Country;
 use Modules\State\Entities\State;
 use Modules\Districts\Entities\Districts;
+use Modules\Vendors\Entities\Vendors;
 use Illuminate\Support\Facades\Http;
 function AllPermissions()
 {
@@ -21,7 +19,7 @@ function AllPermissions()
 	$role['school']=['view','add','edit','delete'];
 	$role['filters']=['view','add','edit','delete'];
 	$role['plants']=['view','add','edit','delete'];
-	$role['venders']=['view','add','edit','delete'];
+	$role['vendors']=['view','add','edit','delete'];
 	$role['stock']=['view','add','edit','delete'];
 	$role['permissions']=['view','add','edit','delete'];
 	$role['trash']=['view','edit','delete'];	
@@ -73,14 +71,6 @@ function User($id)
 	}
 }
 
-function Venders($id)
-{
-    $vender=Venders::find($id);
-    if($vender!=null){
-        return $vender->name;
-    }
-}
-
 
 function FocalPersonRelation()
 {
@@ -111,6 +101,18 @@ function Filter($id)
     if($filter!=null){
         return $filter->name;
     }
+}
+
+function AllPlants()
+{
+    $plants=Plants::all();
+    return $plants;
+}
+
+function AllVendors()
+{
+    $vendors=Vendors::all();
+    return $vendors;
 }
 
 function Plants($id)
@@ -278,6 +280,31 @@ $Filter_Change_Frequency = [
 
 	return $Filter_Change_Frequency;	
 }
+
+
+function WaterQualityTestStatus()
+{
+   $wqts=["Pending for Sample","Sample Collected","Test Completed"];
+
+   return $wqts;
+}
+
+function WaterQualityTestParameters(){
+    $wqtp=[
+        'microbiological'=>'Microbiological',
+        'arsenic'=>'Arsenic',
+        'tds'=>'TDS'
+    ];
+    return $wqtp;
+}
+
+
+function SchoolPlantStatus()
+{
+   $sps=['Recommended', 'Processing', 'Installed', 'Working', 'Faulty', 'Repairing'];
+   return $sps;
+}
+
 
 function ProvincesDistricts()
 {
