@@ -15,6 +15,11 @@ use DB;
 use Auth;
 class DonorsController extends Controller
 {
+
+    function __construct()
+    {
+       Donors::updateOrCreate(['name'=>'general'],['name'=>'general']);
+    }
     /**
      * Display a listing of the resource.
      * @return Renderable

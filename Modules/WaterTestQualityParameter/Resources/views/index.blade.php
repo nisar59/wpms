@@ -32,6 +32,7 @@ Water Quality Test Parameters
             <thead class="text-center bg-primary text-white">
               <tr>
                 <th>Name</th>
+                <th>Normal Range</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -55,6 +56,7 @@ Water Quality Test Parameters
               buttons:[],
               columns: [
                 {data: 'name', name: 'name',class:'text-center'},
+                {data: 'normal_range', name: 'normal_range',class:'text-center'},
                 {data: 'action', name: 'action', orderable: false, searchable: false ,class:'text-center'},
             ]
           });

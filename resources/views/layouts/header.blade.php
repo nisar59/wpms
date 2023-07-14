@@ -23,12 +23,12 @@
             <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
             <i class="mdi mdi-menu"></i>
             </button>
-            <div class="d-none d-sm-block">
+<!--             <div class="d-none d-sm-block">
                 <div class="dropdown pt-4 d-inline-block">
                     <input class="form-check form-switch" type="checkbox" id="maintenance" switch="bool" @if(app()->isDownForMaintenance()) @else checked @endif>
                     <label class="form-label" for="maintenance" data-on-label="Up" data-off-label="Down"></label>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="d-flex">
             <!-- App Search-->
@@ -58,7 +58,7 @@
                     </form>
                 </div>
             </div>
-            @can('logs.view')
+<!--             @can('logs.view')
             <div class="dropdown d-none d-lg-inline-block">
                 <button type="button" class="btn noti-icon header-item waves-effect">
                 <a href="{{url('logs')}}"><i class="mdi mdi-format-list-bulleted-square"></i></a>
@@ -71,7 +71,7 @@
                 <a href="{{url('trash')}}"><i class="mdi mdi-trash-can-outline"></i></a>
                 </button>
             </div>
-            @endcan
+            @endcan -->
             <div class="dropdown d-none d-lg-inline-block">
                 <button type="button" class="btn header-item noti-icon waves-effect" data-bs-toggle="fullscreen">
                 <i class="mdi mdi-fullscreen"></i>

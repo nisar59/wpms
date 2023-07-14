@@ -21,6 +21,7 @@ class VendorsController extends Controller
     {
          if (request()->ajax()) {
         $vendors=Vendors::select('*')->orderBy('id','ASC')->get();
+        
            return DataTables::of($vendors)
            ->addColumn('action',function ($row){
                $action='';

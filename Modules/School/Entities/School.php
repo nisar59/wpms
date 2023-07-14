@@ -34,6 +34,13 @@ class School extends Model
     {
         return $this->hasMany(SchoolPlants::class, 'school_id');
     }
-
+    public function SchoolPlantsInProcess()
+    {
+        return $this->hasMany(SchoolPlants::class, 'school_id')->where('school_plants.status',1);
+    }
+    public function SchoolPlantsInstalled()
+    {
+        return $this->hasMany(SchoolPlants::class, 'school_id')->whereNot('school_plants.status',1)->whereNot('school_plants.status',0);
+    }
 
 }

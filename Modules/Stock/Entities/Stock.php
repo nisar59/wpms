@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Stock extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['name','costodian_number','relation','filter','no_of_filter','received_date','vender','school_id'];
-   	protected $table='stocks';
+    
+    protected $table='stocks';
+    protected $fillable = ['school_id', 'filter_id', 'no_of_filter','used_filters','available_filters','received_date'];
     
     protected static function newFactory()
     {

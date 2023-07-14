@@ -25,18 +25,20 @@ Water Quality Test Parameters
         </div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="form-group">
                 <label>Name</label>
                 <input type="text" class="form-control" value="{{$watertest->name}}" id="name" name="name" placeholder="Enter Water Quality Parameters Test Name">
+                <input type="text" hidden class="form-control" id="parameter" value="{{$watertest->parameter}}" name="parameter" placeholder="Enter Parameter">
               </div>
             </div>
-            <!-- <div class="col-md-6">
+             <div class="col-md-6">
               <div class="form-group">
-                <label>Parameter</label>
-                <input type="text" class="form-control" id="parameter" value="{{$watertest->parameter}}" name="parameter" placeholder="Enter Parameter">
+                <label for="">Normal Range</label>
+                <input type="text" class="form-control" value="{{$watertest->normal_range}}" name="normal_range" placeholder="Enter Normal Range">
               </div>
-            </div> -->
+            </div>
+
           </div><br>
           <div class="card-footer text-end">
             <button class="btn btn-primary mr-1" type="submit">Submit</button>
@@ -48,13 +50,15 @@ Water Quality Test Parameters
   @endsection
   @section('js')
   <script>
-$("#name").keyup(function() {
-  var Text = $(this).val();
-  Text = Text.toLowerCase();
-  Text = Text.replace(/[^a-zA-Z0-9]+/g,'-');
-  $("#parameter").val(Text);        
-})
+    $(document).ready(function() {
+      
+        $(document).on('input', '#name',function() {
+          var Text = $(this).val();
+          Text = Text.toLowerCase();
+          Text = Text.replace(/[^a-zA-Z0-9]+/g,'-');
+          $("#parameter").val(Text);        
+        })
 
-
+    });
   </script>
   @endsection

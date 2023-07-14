@@ -138,6 +138,21 @@ $(document).on('click', '#maintenance',function (e) {
 });
 
 
+  $(document).on('click', '.verify-prompt', function(e) {
+              e.preventDefault();
+              Swal.fire({
+                title: $(this).data('prompt-msg'),
+                showDenyButton: true,
+                confirmButtonText: 'Yes',
+                icon: 'question',
+              }).then((result) => {
+                if(result.isConfirmed){
+                window.location.href=$(this).attr('href');     
+                }
+            });
+
+  });
+
        /* $.contextMenu({
             selector: 'body',
             autoHide: true,

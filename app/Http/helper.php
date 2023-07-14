@@ -11,6 +11,9 @@ use Modules\Country\Entities\Country;
 use Modules\State\Entities\State;
 use Modules\Districts\Entities\Districts;
 use Modules\Vendors\Entities\Vendors;
+use Modules\Donors\Entities\Donors;
+use Modules\WaterTestQualityParameter\Entities\WaterTestQualityParameter;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 function AllPermissions()
 {
@@ -104,6 +107,24 @@ function Filter($id)
     }
 }
 
+function FilterDetail($id)
+{
+    $filter=Filters::find($id);
+    return $filter;
+}
+
+function FiltersStatus()
+{
+   $fs=[
+        1=>'Working',
+        2=>'Faulty',
+        3=>'Expire'
+   ];
+
+   return $fs;
+}
+
+
 function AllPlants()
 {
     $plants=Plants::all();
@@ -114,6 +135,12 @@ function AllVendors()
 {
     $vendors=Vendors::all();
     return $vendors;
+}
+
+function AllDonors()
+{
+    $donors= Donors::all();
+    return $donors;
 }
 
 function Plants($id)
@@ -264,7 +291,7 @@ function ApiCall($type='get', $url, $data)
 
 function ColorsPack()
 {
-	return ['#006BA6','#E33932','#F8A101','#F77C0C','#B3234E','#890D53','#601071', '#3B1585','#6891B1','#05B4C9','#00C3A7','#00C76F'];
+	return ['#005aaa','#0095da','#8ed8f8', '#006BA6','#E33932','#F8A101','#F77C0C','#B3234E','#890D53','#601071', '#3B1585','#6891B1','#05B4C9','#00C3A7','#00C76F'];
 }
 
 
@@ -283,6 +310,33 @@ $Filter_Change_Frequency = [
 }
 
 
+function CalculateNextChangeDate($start_date, $frequency)
+{
+    $date=Carbon::parse($start_date);
+
+    $format=$date;
+
+    if($frequency=="monthly"){
+        $format= $date->addMonth(1);
+    }elseif($frequency=="bimonthly"){
+        $format= $date->addMonth(2);
+    }elseif($frequency=="trimonthly"){
+        $format= $date->addMonth(3);
+    }elseif($frequency=="quarterly"){
+        $format= $date->addMonth(3);
+    }elseif($frequency=="semiyearly"){
+        $format= $date->addMonth(6);
+    }elseif($frequency=="halfyearly"){
+        $format= $date->addMonth(6);
+    }elseif($frequency=="yearly"){
+        $format= $date->addYear(1);
+    }
+
+    return $format->format('Y-m-d');
+
+}
+
+
 function WaterQualityTestStatus()
 {
    $wqts=["Pending for Sample","Sample Collected","Test Completed"];
@@ -291,12 +345,21 @@ function WaterQualityTestStatus()
 }
 
 function WaterQualityTestParameters(){
-    $wqtp=[
-        'microbiological'=>'Microbiological',
-        'arsenic'=>'Arsenic',
-        'tds'=>'TDS'
-    ];
+
+    $wqtp=[];
+    $allwqtp=WaterTestQualityParameter::all();
+    
+    foreach ($allwqtp as $vl) {
+       $wqtp[$vl->parameter]=$vl->name;
+     }
+
     return $wqtp;
+}
+
+function AllWaterQualityTestParameters(){
+
+    $allwqtp=WaterTestQualityParameter::all();
+    return $allwqtp;
 }
 
 

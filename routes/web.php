@@ -24,4 +24,5 @@ Route::get('check-auth', 'HomeController@checkauth');
 Route::get('lock-screen', 'HomeController@lockscreen');
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
-Route::get('/artisan/{command}', 'HomeController@artisan')->name('home')->middleware('auth');
+Route::get('/dashboard', 'HomeController@index')->name('dashboard')->middleware('auth');
+Route::get('/artisan/{command}', 'HomeController@artisan')->name('artisan')->middleware('auth');

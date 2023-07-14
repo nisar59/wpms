@@ -37,9 +37,9 @@ border-left: 3px solid green;
       <li class="nav-item" role="presentation">
         <button class="nav-link fw-bold fs-5" id="water-plant-tab" data-bs-toggle="tab" data-bs-target="#water-plant" type="button" role="tab" aria-controls="water-plant" aria-selected="false">Water Plant</button>
       </li>
-      <li class="nav-item" role="presentation">
+<!--       <li class="nav-item" role="presentation">
         <button class="nav-link fw-bold fs-5" id="stock-tab" data-bs-toggle="tab" data-bs-target="#stock" type="button" role="tab" aria-controls="stock" aria-selected="false">Stock</button>
-      </li>
+      </li> -->
     </ul>
   </div>
   <div class="card-body">
@@ -114,7 +114,7 @@ border-left: 3px solid green;
         <div class="row">
           <div class="col-md-12 text-end">
             @if($school->WaterQualityTestSampleCollected==null)
-            <a href="javascript:void(0)" id="sample-collected-modal">+</a>
+            <a href="javascript:void(0)" class="btn btn-sm btn-success" id="sample-collected-modal">Add Quality Test</a>
             @endif
           </div>
           <div class="col-md-12 text-center">
@@ -124,6 +124,7 @@ border-left: 3px solid green;
             @foreach($school->WaterQualityTest as $wqt)
             @if($wqt->status==1)
             <a href="javascript:void(0)" data-id="{{$wqt->id}}" class="test-completed-modal border-info-left mb-2 text-dark card p-2 table-hover">
+              <span class="btn btn-success btn-sm" style="position:absolute; right:0;">Edit</span>
               <div class="row">
                 <div class="col-6">
                   <p class="m-0"><b>Status:</b> {{WaterQualityTestStatus()[$wqt->status]}}</p>
@@ -135,6 +136,7 @@ border-left: 3px solid green;
             </a>
             @else
             <a href="javascript:void(0)" data-id="{{$wqt->id}}" class="test-completed-modal border-success-left mb-2 text-dark card p-2 table-hover">
+              <span class="btn btn-success btn-sm" style="position:absolute; right:0;">Edit</span>
               <div class="row">
                 <div class="col-2">
                   <p class="m-0"><b>Sample Collected Date:</b> <br>{{\Carbon\Carbon::parse($wqt->sample_collected_date)->format('d-m-Y')}}</p>
@@ -174,8 +176,8 @@ border-left: 3px solid green;
       </div>
       <div class="tab-pane fade" id="water-plant" role="tabpanel" aria-labelledby="water-plant-tab">
         <div class="row">
-          <div class="col-12 text-end">
-            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#add-plant">+</a>
+          <div class="col-12 text-end mb-2">
+            <a href="javascript:void(0)" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#add-plant">Add Plant</a>
           </div>
 
           <div class="col-12">
@@ -184,24 +186,63 @@ border-left: 3px solid green;
               @foreach($school->SchoolPlants as $sp)
                   <div class="accordion-item card">
                     <div class="accordion-header border border-info-left" id="heading{{$sp->id}}">
-                      <div class="row text-center" data-bs-toggle="collapse" data-bs-target="#collapse{{$sp->id}}" aria-expanded="false" aria-controls="collapse{{$sp->id}}">
-                        <div class="col-3">
+                      <div class="row text-center" data-bs-toggle="collapse" @if(in_array($sp->status, [2,3])) data-bs-target="#collapse{{$sp->id}}" @endif aria-expanded="false" aria-controls="collapse{{$sp->id}}">
+                        <div class="col-12">
+                        <a href="javascript:void(0)" data-id="{{$sp->id}}" class="position-absolute fs-4 plant-edit" style="right: 0px; top: -5px;"><i class="fas fa-pen-square"></i></a>
+                        <a href="{{url('school/destroy-plant/'.$sp->id)}}"  class="position-absolute text-danger fs-4 verify-prompt" data-prompt-msg="Are you sure you want to remove the plant" style="right: 0px; top: 15px;"><i class="fas fa-times-circle"></i></a>
+                      </div>
+
+                        <div class="col-2">
                             <p class="m-0"><b>Plant Name:</b> <br>{{$sp->Plant!=null ? $sp->Plant->name : ''}}</p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                           <p class="m-0"><b>Vendor:</b> <br> {{$sp->Vendor!=null ? $sp->Vendor->name : ''}}</p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                           <p class="m-0"><b>Estimated Cost:</b> <br> {{number_format($sp->estimated_cost)}}</p>
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                           <p class="m-0"><b>Status:</b><br> {{SchoolPlantStatus()[$sp->status]}}</p>
                         </div>
+
+                        @if($sp->Donor!=null)
+                        <div class="col-2">
+                          <p class="m-0"><b>Donor:</b><br> {{$sp->Donor!=null ? $sp->Donor->name : ''}}</p>
+                        </div>
+                        @endif
+
+                        @if($sp->installation_completion_date!=null)
+                        <div class="col-2">
+                          <p class="m-0"><b>Installation Date:</b><br> {{\Carbon\Carbon::parse($sp->installation_completion_date)->format('d-m-Y')}}</p>
+                        </div>
+                        @endif
                       </div>
                     </div>
                     <div id="collapse{{$sp->id}}" class="accordion-collapse collapse" aria-labelledby="heading{{$sp->id}}" data-bs-parent="#accordionPlants">
                       <div class="accordion-body border">
+                        @foreach($sp->SPF as $spf)
+                          <div data-spf="{{url('school/change-filter/'.$spf->id)}}" class="row position-relative border-primary change-filters border mb-2 p-2">
+                                <div class="col-12">
+                                <a href="javascript:void(0)" class="position-absolute btn btn-success btn-sm " style="right: 0px; top: 0px;">Change Filter</a>
 
+                                </div>
+                                <div class="col-2">
+                                  <p class="m-0"><b>Filter Name: </b> {{Filter($spf->filter_id)}}</p>
+                                </div>
+                                <div class="col-2">
+                                  <p class="m-0"><b>Status: </b> {{FiltersStatus()[$spf->status]}}</p>
+                                </div>
+                                <div class="col-2">
+                                  <p class="m-0"><b>Change Frequency: </b> {{$spf->frequency}}</p>
+                                </div>                                
+                                <div class="col-3">
+                                  <p class="m-0"><b>Last Changed Date:</b> {{$spf->last_changed_date}}</p>
+                                </div>
+                                <div class="col-3">
+                                  <p class="m-0"><b>Next Change Date:</b> {{$spf->next_change_date}}</p>
+                                </div>
+                          </div>
+                        @endforeach
                       </div>
                     </div>
                   </div>
@@ -212,39 +253,100 @@ border-left: 3px solid green;
 
         </div>
       </div>
-      <div class="tab-pane fade" id="stock" role="tabpanel" aria-labelledby="stock-tab">Stock</div>
+<!--       <div class="tab-pane fade" id="stock" role="tabpanel" aria-labelledby="stock-tab">
+        @foreach($school->SchoolPlants as $sp)
+                        @foreach($sp->SPF as $spf)
+                          <div data-spf="{{url('school/update-stock/'.$spf->id)}}" data-object="{{json_encode($spf)}}" class="row border-primary update-stoc border mb-2 p-2">
+                                <div class="col-2">
+                                  <p class="m-0"><b>Filter Name: </b> {{Filter($spf->filter_id)}}</p>
+                                </div>
+                                <div class="col-2">
+                                  <p class="m-0"><b>Total Stock: </b> {{$spf->total_stock}}</p>
+                                </div>
+                                <div class="col-2">
+                                  <p class="m-0"><b>Used Stock: </b> {{$spf->used_stock}}</p>
+                                </div>                                
+                                <div class="col-3">
+                                  <p class="m-0"><b>Available Stock:</b> {{$spf->available_stock}}</p>
+                                </div>
+                                <div class="col-3">
+                                  <p class="m-0"><b>Date:</b> {{$spf->stock_date}}</p>
+                                </div>
+                          </div>
+                        @endforeach
+        @endforeach
+
+      </div> -->
     </div>
   </div>
 </div>
-@include('waterqualitytest::create')
+@include('waterqualitytest::create-modal')
 @include('school::add-plant')
+@include('school::change-filters')
+@include('school::update-stock')
 <div id="mdl"></div>
 @endsection
 @section('js')
 <script>
 $(document).ready(function() {
-$(document).on('click', '#sample-collected-modal', function() {
-$("#sample-collected").modal('show');
-});
-$(document).on('click', '.test-completed-modal', function() {
-var id=$(this).data('id');
-$.ajax({
-url:"{{url('water-quality-test/edit')}}/"+id,
-type:"GET",
-success:function(res) {
-if(res.success){
-$("#mdl").html(res.data);
-$("#test-completed").modal('show');
-}else{
-error(res.message);
-}
-},
-error:function(err) {
-console.log(err);
-error(err.responseText);
-}
-});
-});
+    $(document).on('click', '#sample-collected-modal', function() {
+        $("#sample-collected").modal('show');
+    });
+    $(document).on('click', '.test-completed-modal', function() {
+        var id = $(this).data('id');
+        $.ajax({
+            url: "{{url('water-quality-test/edit-modal')}}/" + id,
+            type: "GET",
+            success: function(res) {
+                if (res.success) {
+                    $("#mdl").html(res.data);
+                    $("#test-completed").modal('show');
+                } else {
+                    error(res.message);
+                }
+            },
+            error: function(err) {
+                console.log(err);
+                error(err.responseText);
+            }
+        });
+    });
+
+  $(document).on('click', '.plant-edit', function() {
+      var spid=$(this).data('id');
+
+        $.ajax({
+            url: "{{url('school/edit-plant')}}/" + spid,
+            type: "GET",
+            success: function(res) {
+                if (res.success) {
+                    $("#mdl").html(res.data);
+                    $("#edit-plant").modal('show');
+                } else {
+                    error(res.message);
+                }
+            },
+            error: function(err) {
+                console.log(err);
+                error(err.responseText);
+            }
+        });
+
+  });
+
+  $(document).on('click', '.change-filters', function() {
+    var url=$(this).data('spf');
+    $("#filter-change form").attr('action', url);
+    $("#filter-change").modal('show');
+  });
+
+  $(document).on('click', '.update-stock', function() {
+    var url=$(this).data('spf');
+    $("#update-stock form").attr('action', url);
+    $("#update-stock").modal('show');
+  });
+
+
 });
 </script>
 @endsection

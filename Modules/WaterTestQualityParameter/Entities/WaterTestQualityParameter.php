@@ -9,7 +9,7 @@ class WaterTestQualityParameter extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','parameter'];
+    protected $fillable = ['name','parameter', 'normal_range'];
     protected $table='water_test_quality_parameters';
     
     protected static function newFactory()
